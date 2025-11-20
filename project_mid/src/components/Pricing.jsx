@@ -10,11 +10,11 @@ const Pricing = () => {
       <div className="flex flex-wrap">
         {pricingOptions.map((option, index) => (
           <div key={index} className="w-full sm:w-1/2 lg:w-1/3 p-2">
-            <div className="p-10 border border-blue-900 rounded-xl">
+            <div className="p-10 border border-rose-900 rounded-xl">
               <p className="text-4xl mb-8">
                 {option.title}
                 {option.title === "Pro" && (
-                  <span className="bg-linear-to-r from-blue-500 to-violet-800 text-transparent bg-clip-text text-xl mb-4 ml-2">
+                  <span className="bg-linear-to-r from-rose-500 to-rose-800 text-transparent bg-clip-text text-xl mb-4 ml-2">
                     (Most Popular)
                   </span>
                 )}
@@ -33,7 +33,7 @@ const Pricing = () => {
               </ul>
               <a
                 href="#"
-                className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-blue-900 border border-blue-900 rounded-lg transition duration-200"
+                className="inline-flex justify-center items-center text-center w-full h-12 p-5 mt-20 tracking-tight text-xl hover:bg-rose-900 border border-rose-900 rounded-lg transition duration-200"
               >
                 Subscribe
               </a>

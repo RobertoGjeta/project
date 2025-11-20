@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
 /* ===== Tailwind v4 theme tokens (primary blue) ===== */
 @theme {
   --color-primary-50:  #eff6ff;
@@ -30,7 +30,7 @@ html, body, #root {
 }
 
 /* (Optional) kill the old generic button styles so Tailwind can win */
-button { all: unset; }
+.btn { all: unset; }
 
 /* ===== Reusable utilities ===== */
 @utility btn {

@@ -1,72 +1,194 @@
- import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import logo from "../assets/logo.png";
-import { navItems } from "../constants";
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChevronDownIcon,
+  UserCircleIcon,
+  DocumentCheckIcon,
+  CreditCardIcon,
+} from '@heroicons/react/24/outline'
 
 const Navbar = () => {
-  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [showAccountMenu, setShowAccountMenu] = useState(false)
+  const location = useLocation()
 
-  const toggleNavbar = () => {
-    setMobileDrawerOpen(!mobileDrawerOpen);
-  };
+  const isAccountRoute = location.pathname.startsWith('/account')
+
+  const toggleMenu = () => setIsOpen(prev => !prev)
+
+  const closeMobileMenu = () => {
+    setIsOpen(false)
+    setShowAccountMenu(false)
+  }
 
   return (
-    <nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-neutral-700/80">
-      <div className="container px-4 mx-auto relative lg:text-sm">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center shrink-0">
-            <img className="h-10 w-10 mr-2" src={logo} alt="Logo" />
-            <span className="text-xl tracking-tight">GymBae</span>
-          </div>
-          <ul className="hidden lg:flex ml-14 space-x-12">
-            {navItems.map((item, index) => (
-              <li key={index}>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-          <div className="hidden lg:flex justify-center space-x-12 items-center">
-            <a href="#" className="py-2 px-3 border rounded-md">
-              Sign In
-            </a>
-            <a
-              href="#"
-              className="bg-linear-to-r from-blue-500 to-blue-800 py-2 px-3 rounded-md"
+    <nav className="w-screen h-20 fixed top-0 left-0 z-50 bg-rose-50 border-b border-rose-100 drop-shadow-sm">
+      <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
+        {/* Logo / title */}
+        <Link to="/" onClick={closeMobileMenu}>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-rose-700 transition-all duration-300">
+            {isAccountRoute ? 'My Account' : 'GymBae'}
+          </h1>
+        </Link>
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-8">
+          <ul className="flex items-center gap-6 text-sm font-medium text-gray-700">
+            <li>
+              <Link to="/" className="hover:text-rose-600">
+                Home
+              </Link>
+            </li>
+
+            {/* My Account dropdown */}
+            <li
+              className="relative flex items-center gap-1 cursor-pointer"
+              onMouseEnter={() => setShowAccountMenu(true)}
+              onMouseLeave={() => setShowAccountMenu(false)}
             >
-              Create an account
-            </a>
-          </div>
-          <div className="lg:hidden md:flex flex-col justify-end">
-            <button onClick={toggleNavbar}>
-              {mobileDrawerOpen ? <X /> : <Menu />}
-            </button>
+              <span className="flex items-center gap-1 hover:text-rose-600">
+                <UserCircleIcon className="w-4 h-4 text-rose-700" />
+                My Account
+                <ChevronDownIcon className="w-4 h-4 text-rose-700" />
+              </span>
+
+              {showAccountMenu && (
+                <ul className="absolute top-full left-0 mt-2 bg-white border border-rose-100 rounded-lg shadow-lg w-52 py-2 text-sm z-50">
+                  <li>
+                    <Link
+                      to="/account/profile"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-gray-700"
+                    >
+                      <UserCircleIcon className="w-4 h-4 text-rose-700" />
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/account/plan"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-gray-700"
+                    >
+                      <DocumentCheckIcon className="w-4 h-4 text-rose-700" />
+                      My Plan
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/account/subscription"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-gray-700"
+                    >
+                      <CreditCardIcon className="w-4 h-4 text-rose-700" />
+                      My Subscription
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+
+            <li className="hover:text-rose-600">About Us</li>
+            <li className="hover:text-rose-600">Support</li>
+            <li className="hover:text-rose-600">Terms &amp; Policies</li>
+            <li className="hover:text-rose-600">Language</li>
+          </ul>
+
+          {/* Auth buttons */}
+          <div className="flex items-center gap-3">
+            <Link
+              to="/login"
+              className="px-4 py-2 text-sm border border-rose-300 rounded-lg text-rose-700 hover:bg-rose-100"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/signup"
+              className="px-4 py-2 text-sm rounded-lg bg-rose-600 text-white hover:bg-rose-700"
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
-        {mobileDrawerOpen && (
-          <div className="fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden">
-            <ul>
-              {navItems.map((item, index) => (
-                <li key={index} className="py-4">
-                  <a href={item.href}>{item.label}</a>
-                </li>
-              ))}
-            </ul>
-            <div className="flex space-x-6">
-              <a href="#" className="py-2 px-3 border rounded-md">
-                Sign In
-              </a>
-              <a
-                href="#"
-                className="py-2 px-3 rounded-md bg-linear-to-r from-blue-500 to-blue-800"
-              >
-                Create an account
-              </a>
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-};
 
-export default Navbar;
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden flex items-center justify-center p-2 rounded-md border border-rose-200"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
+        >
+          {isOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden bg-rose-50 border-t border-rose-100 px-4 pb-4">
+          <ul className="flex flex-col gap-3 pt-3 text-sm text-gray-800">
+            <li className="border-b border-rose-200 pb-2">
+              <Link to="/" onClick={closeMobileMenu}>
+                Home
+              </Link>
+            </li>
+
+            {/* Mobile My Account accordion */}
+            <li className="border-b border-rose-200 pb-2">
+              <button
+                className="w-full flex items-center justify-between"
+                onClick={() => setShowAccountMenu(prev => !prev)}
+              >
+                <span className="flex items-center gap-2">
+                  <UserCircleIcon className="w-4 h-4 text-rose-700" />
+                  My Account
+                </span>
+                <ChevronDownIcon className="w-4 h-4 text-rose-700" />
+              </button>
+              {showAccountMenu && (
+                <ul className="mt-2 ml-4 flex flex-col gap-1 text-sm">
+                  <li>
+                    <Link to="/account/profile" onClick={closeMobileMenu}>
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/account/plan" onClick={closeMobileMenu}>
+                      My Plan
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/account/subscription" onClick={closeMobileMenu}>
+                      My Subscription
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+
+            <li className="border-b border-rose-200 pb-2">About Us</li>
+            <li className="border-b border-rose-200 pb-2">Support</li>
+            <li className="border-b border-rose-200 pb-2">Terms &amp; Policies</li>
+            <li className="border-b border-rose-200 pb-2">Language</li>
+          </ul>
+
+          <div className="mt-4 flex flex-col gap-2">
+            <Link
+              to="/login"
+              onClick={closeMobileMenu}
+              className="w-full text-center px-4 py-2 rounded-lg border border-rose-300 text-rose-700 hover:bg-rose-100"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/signup"
+              onClick={closeMobileMenu}
+              className="w-full text-center px-4 py-2 rounded-lg bg-rose-600 text-white hover:bg-rose-700"
+            >
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
+  )
+}
+
+export default Navbar

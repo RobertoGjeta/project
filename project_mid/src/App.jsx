@@ -1,25 +1,25 @@
-import Footer from "./components/Footer";
-import HeroSection from "./components/HeroSection";
-import FeatureSection from "./components/FeatureSection";
-import Workflow from "./components/Workflow";
-import Pricing from "./components/Pricing";
-import Testimonials from "./components/Testimonials";
-import Navbar from "./components/Navbar.jsx";   // ⬅️ ADD THIS
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import MyAccount from "./components/Account/MyAccount";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
-const App = () => {
+function App() {
   return (
-    <div className="min-h-screen bg-white text-slate-800">
+    <div className="min-h-screen bg-rose-50 text-gray-800">
+
       <Navbar />
-      <main className="w-full pt-20 px-6">
-        <HeroSection />
-        <FeatureSection />
-        <Workflow />
-        <Pricing />
-        <Testimonials />
-        <Footer />
-      </main>
+      <div className="pt-20 px-6">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/account/*" element={<MyAccount />} />
+        </Routes>
+      </div>
     </div>
   );
-};
+}
 
 export default App;
