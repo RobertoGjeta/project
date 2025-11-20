@@ -1,25 +1,29 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+
+
 
 function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const storedUser = JSON.parse(localStorage.getItem('user'))
+    const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (storedUser && storedUser.email === email && storedUser.password === password) {
-      navigate('/account')
+      navigate('/account');
     } else {
-      alert('Invalid credentials or user not registered.')
+      alert('Invalid credentials or user not registered.');
     }
   }
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-80px)] bg-rose-50">
+     
       <div className="bg-white p-10 rounded-xl shadow-md border border-rose-100 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-rose-700 mb-6">Sign In</h2>
 
@@ -46,6 +50,7 @@ function Login() {
               className="w-full p-3 border border-rose-200 rounded-md bg-white focus:ring-2 focus:ring-rose-300 focus:outline-none"
               required
             />
+            
           </div>
 
           <button
@@ -56,7 +61,7 @@ function Login() {
           </button>
 
           <p className="text-sm text-center text-gray-600 mt-2">
-            Don&apos;t have an account? <span className="font-semibold">Sign up from the navbar.</span>
+            Dont have an account? <Link to ="/signup"><span className="font-semibold">Sign up here.</span></Link> 
           </p>
         </form>
       </div>
